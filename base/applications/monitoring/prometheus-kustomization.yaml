@@ -1,7 +1,15 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
-
-resources:
-- fluxcd-gitrepo.yaml
-- monitoring-config-kustomization.yaml
-- prometheus-kustomization.yaml
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  force: false
+  interval: 1h0m0s
+  path: ./manifests/monitoring/kube-prometheus-stack
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-monitoring
+  timeout: 5m0s
+  wait: true
